@@ -20,6 +20,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O3 -fopenmp -std=c++14 -fPIC")
+set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lglog")
 
 if ($ENV{USE_MKL}) # assuming icc
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_MKL -ipo")# -no-vec")
