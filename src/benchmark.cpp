@@ -5,6 +5,7 @@
 #include "ctpl.h"
 #include "util.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <glog/logging.h>
 
 void f1(int tid, size_t num_loops, int iter)
@@ -30,7 +31,7 @@ int main(int argc, char** argv)
 {
     size_t num_loops = 1000000000;
     int iter = 100;
-    int inter_threads = 4;
+    int inter_threads = atoi(argv[1]);
     //int intra_threads = int(argv[2]);
     ctpl::thread_pool pool(inter_threads);
     for (int i=0; i<inter_threads; i++) pool.push(f1, num_loops, iter);
