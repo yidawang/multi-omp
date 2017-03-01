@@ -6,7 +6,7 @@ if ($ENV{VERBOSE})
 endif ($ENV{VERBOSE})
 
 # add the binary tree to the search path for include files
-include_directories("${PROJECT_SOURCE_DIR}")
+include_directories("${PROJECT_SOURCE_DIR}/src")
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -48,7 +48,7 @@ set(CMAKE_C_COMPILER ${CC})
 set(CMAKE_CXX_COMPILER ${CXX})
 
 # get all *.cpp files recursively
-file(GLOB_RECURSE SRC_FILES *.cpp)
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
 # add the executable
 add_executable (multi-omp ${SRC_FILES})
