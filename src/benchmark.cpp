@@ -27,19 +27,24 @@ void f1(int tid, size_t num_loops, int iter) {
         CHECK_LT(max_proc-1-i, max_proc);
         CHECK_EQ(kmp_set_affinity_mask_proc(max_proc-1-i, &mask), 0);
     }
-# pragma omp parallel num_threads(threads)
+/*# pragma omp parallel num_threads(threads)
     {
         // set affinity for the spawned threads
         CHECK_EQ(kmp_set_affinity(&mask), 0);
-    }
+    }*/
     while (count++ < iter) {
-#pragma omp parallel for
-        for (size_t i = 0; i < num_loops; i++) {
-            result[i] = arr[i] * 2.0;
+#pragma omp parallel num_threads(threads)
+        {
+            CHECK_EQ(kmp_set_affinity(&mask), 0);
+#pragma omp for
+            for (size_t i = 0; i < num_loops; i++) {
+                result[i] = arr[i] * float(2.0);
+            }
+            compiler_treat = result[iter % num_loops];
+            LOG(INFO) << sformat("in thread %d compiler_treat %.2f", tid, compiler_treat);
         }
-        compiler_treat = result[iter%num_loops];
-        LOG(INFO) << sformat("in thread %d compiler_treat %.2f", tid, compiler_treat);
     }
+    printf("%d\n", unit);
     delete [] arr;
     delete [] result;
     return;
